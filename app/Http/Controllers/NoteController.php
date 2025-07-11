@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
 use App\Models\Note;
+use Illuminate\Support\Facades\Auth;
 
 class NoteController extends Controller
 {
@@ -13,7 +14,14 @@ class NoteController extends Controller
      */
     public function index()
     {
-        //
+        $notes = Note::query()
+            ->where('user_id', Auth::user()->id)
+            ->latest()
+            ->paginate(4);
+
+        return inertia('Notes/Index', [
+            'notes' => $notes,
+        ]);
     }
 
     /**
@@ -21,7 +29,7 @@ class NoteController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Notes/Create');
     }
 
     /**

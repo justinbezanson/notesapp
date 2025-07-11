@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NoteController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -7,9 +8,14 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('home');
 
-Route::get('/notes/create', function () {
-    return Inertia::render('Notes/Create');
-})->name('notes.create');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/notes', [NoteController::class, 'index'])->name('notes.index');
+    Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
+
+    Route::get('/notes/{note}', function ($note) {
+        return Inertia::render('Notes/Show', ['note' => $note]);
+    })->name('notes.show');
+});
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
