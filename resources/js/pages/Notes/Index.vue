@@ -23,29 +23,29 @@ const breadcrumbs: BreadcrumbItem[] = [
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="grid grid-cols-3">
-            <div class="border-r border-t border-sidebar-border/70 dark:border-sidebar-border rounded-r mt-2">
+            <div class="">
                 <div 
                     v-for="note in props.notes.data"
                     :key="note.id"
-                    class="border-b border-sidebar-border/70 dark:border-sidebar-border last:border-b-0 py-4 px-4"
+                    class="border border-sidebar-border/70 dark:border-sidebar-border rounded m-1 py-2 px-2"
                 >
-                    <div class="flex justify-between">
-                        <div class="flex items-center space-x-2">
+                    <div class="">
+                        <div class="space-x-2">
                             <div class="text-sm font-medium text-gray-900 dark:text-white">
                                 <strong>{{ note.title }}</strong>
-                                <span class="text-sm text-gray-500 dark:text-gray-400">
-                                    {{ note.created_at }}
+                                <span class="text-xs text-gray-500 dark:text-gray-400">
+                                    {{ new Date(note.created_at).toLocaleDateString() }}
                                 </span>
-                                
-                                
                             </div>
                         </div>
-                        <div class="flex items-center space-x-2">
+                        <div class="space-x-2 text-sm">
                             {{ note.content}}
                         </div>  
                     </div>
                 </div>
-                <Pagination :links="props.notes.links" class="mb-4" />
+                <div class="ml-1">
+                <Pagination :links="props.notes.links" :currentpage="props.notes.current_page" :lastpage="props.notes.last_page" />
+                </div>
             </div>
             <div class="col-span-2 mt-2 ml-2">
                 Hello
