@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
-import { QuillEditor } from '@vueup/vue-quill'
+import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import { ref } from 'vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -18,7 +18,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const content = ref<string>('');
-
 </script>
 
 <template>
@@ -28,6 +27,4 @@ const content = ref<string>('');
     </AppLayout>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

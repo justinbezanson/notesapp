@@ -1,15 +1,15 @@
 <script setup lang="ts">
+import Pagination from '@/components/Pagination.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
-import Pagination from '@/components/Pagination.vue'
 
-const props = defineProps(['notes'])
+const props = defineProps(['notes']);
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
-        href: '/dashboard', 
+        href: '/dashboard',
     },
     {
         title: 'Notes',
@@ -24,10 +24,10 @@ const breadcrumbs: BreadcrumbItem[] = [
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="grid grid-cols-3">
             <div class="">
-                <div 
+                <div
                     v-for="note in props.notes.data"
                     :key="note.id"
-                    class="border border-sidebar-border/70 dark:border-sidebar-border rounded m-1 py-2 px-2"
+                    class="m-1 rounded border border-sidebar-border/70 px-2 py-2 dark:border-sidebar-border"
                 >
                     <div class="">
                         <div class="space-x-2">
@@ -39,17 +39,15 @@ const breadcrumbs: BreadcrumbItem[] = [
                             </div>
                         </div>
                         <div class="space-x-2 text-sm">
-                            {{ note.content}}
-                        </div>  
+                            {{ note.content }}
+                        </div>
                     </div>
                 </div>
                 <div class="ml-1">
-                <Pagination :links="props.notes.links" :currentpage="props.notes.current_page" :lastpage="props.notes.last_page" />
+                    <Pagination :links="props.notes.links" :currentpage="props.notes.current_page" :lastpage="props.notes.last_page" />
                 </div>
             </div>
-            <div class="col-span-2 mt-2 ml-2">
-                Hello
-            </div>
+            <div class="col-span-2 mt-2 ml-2">Hello</div>
         </div>
     </AppLayout>
 </template>
