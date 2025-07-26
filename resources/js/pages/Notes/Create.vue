@@ -5,6 +5,7 @@ import { Head } from '@inertiajs/vue3';
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { ref } from 'vue';
+import NoteList from '@/components/Notes/NoteList.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -18,12 +19,20 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const content = ref<string>('');
+const props = defineProps(['notes']);
 </script>
 
 <template>
     <Head title="Create Note" />
     <AppLayout :breadcrumbs="breadcrumbs" title="Create Note">
-        <QuillEditor theme="snow" v-model="content" />
+        <div class="grid grid-cols-3">
+            <div>
+            <NoteList :notes="props.notes" />
+            </div>
+            <div class="col-span-2 mt-2 ml-2">
+                <QuillEditor theme="snow" v-model="content" />
+            </div>
+        </div>
     </AppLayout>
 </template>
 

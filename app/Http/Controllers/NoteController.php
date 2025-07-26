@@ -29,7 +29,14 @@ class NoteController extends Controller
      */
     public function create()
     {
-        return inertia('Notes/Create');
+        $notes = Note::query()
+            ->where('user_id', Auth::user()->id)
+            ->latest()
+            ->paginate(4);
+
+        return inertia('Notes/Create', [
+            'notes' => $notes,
+        ]);
     }
 
     /**
