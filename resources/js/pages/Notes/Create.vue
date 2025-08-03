@@ -29,11 +29,24 @@ const props = defineProps(['notes']);
             <div>
             <NoteList :notes="props.notes" />
             </div>
-            <div class="col-span-2 mt-2 ml-2">
+            <div class="col-span-2 mt-1 ml-0 mr-1">
                 <QuillEditor theme="snow" v-model="content" />
             </div>
         </div>
     </AppLayout>
 </template>
 
-<style scoped></style>
+<style>
+.ql-toolbar {
+    border: 1px solid #f3f4f6 !important; /*border-gray-100*/
+    border-top-left-radius: 0.375rem; /* Tailwind rounded-md */
+    border-top-right-radius: 0.375rem; /* Tailwind rounded-md */
+}
+
+.ql-container {
+    border: 1px solid #f3f4f6 !important; /*border-gray-100*/
+    border-bottom-left-radius: 0.375rem; /* Tailwind rounded-md */
+    border-bottom-right-radius: 0.375rem; /* Tailwind rounded-md */
+    border-top-width: 0 !important;
+}
+</style>
