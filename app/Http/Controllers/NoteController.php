@@ -6,6 +6,8 @@ use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
 use App\Models\Note;
 use Illuminate\Support\Facades\Auth;
+use Stevebauman\Purify\Facades\Purify;
+use Illuminate\Support\Facades\DB;
 
 class NoteController extends Controller
 {
@@ -17,6 +19,7 @@ class NoteController extends Controller
         $notes = Note::query()
             ->where('user_id', Auth::user()->id)
             ->latest()
+            ->limitChars('content', 200)
             ->paginate(4);
 
         return inertia('Notes/Index', [
@@ -32,6 +35,7 @@ class NoteController extends Controller
         $notes = Note::query()
             ->where('user_id', Auth::user()->id)
             ->latest()
+            ->limitChars('content', 200)
             ->paginate(4);
 
         return inertia('Notes/Create', [
@@ -44,7 +48,16 @@ class NoteController extends Controller
      */
     public function store(StoreNoteRequest $request)
     {
-        //
+        $note = Note::create([
+            'title' => $request->title,
+            'slug' => str($request->title)->slug(),
+            'content' => Purify::clean($request->content),
+            'user_id' => Auth::user()->id,
+        ]);
+
+        return to_route('notes.index', [
+            'successMessage' => 'Note created successfully.',
+        ]);
     }
 
     /**

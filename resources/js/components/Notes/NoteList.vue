@@ -13,9 +13,7 @@
                     </span>
                 </div>
             </div>
-            <div class="space-x-2 text-sm">
-                {{ note.content }}
-            </div>
+            <div class="space-x-2 text-sm" v-html="note.content"></div>
         </div>
     </div>
     <div class="ml-1">

@@ -12,6 +12,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/notes', [NoteController::class, 'index'])->name('notes.index');
     Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
 
+    Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
+
     Route::get('/notes/{note}', function ($note) {
         return Inertia::render('Notes/Show', ['note' => $note]);
     })->name('notes.show');
