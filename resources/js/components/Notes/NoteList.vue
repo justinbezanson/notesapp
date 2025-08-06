@@ -13,7 +13,7 @@
                     </span>
                 </div>
             </div>
-            <div class="space-x-2 text-sm" v-html="note.content"></div>
+            <div class="space-x-2 text-sm" v-html="note.content_limited"></div>
         </div>
     </div>
     <div class="ml-1">
@@ -37,6 +37,7 @@ export default {
                     title: string;
                     content: string;
                     created_at: string;
+                    content_limited: string;
                 }>;
                 links: Array<{ url: string | null; label: string; active?: boolean }>;
                 current_page: number;

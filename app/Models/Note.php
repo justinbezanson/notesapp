@@ -33,6 +33,6 @@ class Note extends Model
      */
     public function scopeLimitChars($query, $field, $chars)
     {
-        return $query->select(DB::raw("substr({$field}, 1, {$chars}) as {$field}"));
+        return $query->select(DB::raw("*, substr({$field}, 1, {$chars}) as {$field}_limited"));
     }
 }
