@@ -48,6 +48,7 @@ class NoteController extends Controller
      */
     public function store(StoreNoteRequest $request)
     {
+        //TODO: Add validation rules in StoreNoteRequest
         $note = Note::create([
             'title' => $request->title,
             'slug' => str($request->title)->slug(),
@@ -65,7 +66,16 @@ class NoteController extends Controller
      */
     public function show(Note $note)
     {
-        //
+        $notes = Note::query()
+            ->where('user_id', Auth::user()->id)
+            ->latest()
+            ->limitChars('content', 200)
+            ->paginate(4);
+
+        return inertia('Notes/Show', [
+            'notes' => $notes,
+            'note' => $note,
+        ]);
     }
 
     /**
@@ -81,7 +91,16 @@ class NoteController extends Controller
      */
     public function update(UpdateNoteRequest $request, Note $note)
     {
-        //
+        //TODO: Add validation rules in UpdateNoteRequest
+        $note->update([
+            'title' => $request->title,
+            'slug' => str($request->title)->slug(),
+            'content' => Purify::clean($request->content),
+        ]);
+
+        return to_route('notes.index', [
+            'successMessage' => 'Note updated successfully.',
+        ]);
     }
 
     /**

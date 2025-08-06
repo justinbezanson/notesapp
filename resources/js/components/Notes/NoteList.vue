@@ -7,7 +7,9 @@
         <div class="">
             <div class="space-x-2">
                 <div class="text-sm font-medium text-gray-900 dark:text-white">
-                    <strong>{{ note.title }}</strong>
+                    <a :href="`/notes/${note.id}`">
+                        <strong>{{ note.title }}</strong>
+                    </a>
                     <span class="text-xs text-gray-500 dark:text-gray-400">
                         {{ new Date(note.created_at).toLocaleDateString() }}
                     </span>
