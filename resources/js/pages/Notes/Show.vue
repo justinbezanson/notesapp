@@ -30,6 +30,12 @@ const form = useForm({
 const saveNote = async () => {
     form.post(route('notes.update', { note: props.note.id, title: form.title, content: form.content }));
 };
+
+const deleteNote = async () => {
+    if (confirm('Are you sure you want to delete this note? This action cannot be undone.')) {
+        form.delete(route('notes.destroy', { note: props.note.id }));
+    }
+};
 </script>
 
 <template>
@@ -55,6 +61,7 @@ const saveNote = async () => {
 
                 <div class="mt-2">
                     <Button @click="saveNote" class="cursor-pointer">Save Note</Button>
+                    <Button @click="deleteNote" variant="destructive" class="cursor-pointer ml-2">Delete Note</Button>
                 </div>
             </div>
         </div>

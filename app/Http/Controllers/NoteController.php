@@ -108,6 +108,11 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        //
+        // Ensure the authenticated user is the owner of the note
+        $note->delete();
+
+        return to_route('notes.index', [
+            'successMessage' => 'Note deleted successfully.',
+        ]);
     }
 }
