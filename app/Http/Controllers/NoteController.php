@@ -24,6 +24,7 @@ class NoteController extends Controller
 
         return inertia('Notes/Index', [
             'notes' => $notes,
+            'showNoteList' => session('showNoteList', true),
         ]);
     }
 
@@ -40,6 +41,7 @@ class NoteController extends Controller
 
         return inertia('Notes/Create', [
             'notes' => $notes,
+            'showNoteList' => session('showNoteList', true),
         ]);
     }
 
@@ -75,6 +77,7 @@ class NoteController extends Controller
         return inertia('Notes/Show', [
             'notes' => $notes,
             'note' => $note,
+            'showNoteList' => session('showNoteList', true),
         ]);
     }
 

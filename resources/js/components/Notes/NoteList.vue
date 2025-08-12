@@ -1,4 +1,5 @@
 <template>
+    <button @click="show = !show">Toggle</button>
     <div
         v-for="note in notes.data"
         :key="note.id"
@@ -25,7 +26,7 @@
 
 <script lang="ts">
 import Pagination from '@/components/Pagination.vue';
-import { defineProps } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 
 export default {
     components: {
