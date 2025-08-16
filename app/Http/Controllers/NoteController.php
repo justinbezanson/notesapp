@@ -7,14 +7,14 @@ use App\Http\Requests\UpdateNoteRequest;
 use App\Models\Note;
 use Illuminate\Support\Facades\Auth;
 use Stevebauman\Purify\Facades\Purify;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class NoteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $notes = Note::query()
             ->where('user_id', Auth::user()->id)
@@ -22,9 +22,12 @@ class NoteController extends Controller
             ->limitChars('content', 200)
             ->paginate(4);
 
+        $message = $request->query('successMessage');
+
         return inertia('Notes/Index', [
             'notes' => $notes,
             'showNoteList' => session('showNoteList', true),
+            'successMessage' => $message,
         ]);
     }
 

@@ -5,8 +5,13 @@ import { Head, usePage } from '@inertiajs/vue3';
 import NoteList from '@/components/Notes/NoteList.vue';
 import Button from '@/components/ui/button/Button.vue';
 import NoteToolbar from '@/components/Notes/NotesToolbar.vue';
+import { toast } from "vue-sonner"
+import { onMounted } from 'vue';
+
+//TODO: toast needs work so it doesn't show on page refresh
+//TODO: showNotelist needs to be sent to server to update sesssion var or switch to local storage
     
-const props = defineProps(['notes']);
+const props = defineProps(['notes', 'successMessage']);
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -18,6 +23,15 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/notes',
     },
 ];
+
+onMounted(() => {
+    if (props?.successMessage !== null) {
+        toast(props.successMessage, {
+            description: 'Your note has been saved successfully.'
+        });
+    }
+});
+
 </script>
 
 <template>

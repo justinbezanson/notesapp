@@ -1,5 +1,4 @@
 <template>
-    <button @click="show = !show">Toggle</button>
     <div
         v-for="note in notes.data"
         :key="note.id"
@@ -8,12 +7,18 @@
         <div class="">
             <div class="space-x-2">
                 <div class="text-sm font-medium text-gray-900 dark:text-white">
-                    <a :href="`/notes/${note.id}`">
-                        <strong>{{ note.title }}</strong>
-                    </a>
-                    <span class="text-xs text-gray-500 dark:text-gray-400">
-                        {{ new Date(note.created_at).toLocaleDateString() }}
-                    </span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3/4">
+                            <a :href="`/notes/${note.id}`" class="hover:text-indigo-600 hover:underline">
+                                <strong>{{ note.title }}</strong>
+                            </a>
+                        </div>
+                        <div class="w-1/4 text-right">
+                            <span class="text-xs text-gray-500 dark:text-gray-400">
+                                {{ new Date(note.created_at).toLocaleDateString() }}
+                            </span>
+                        </div>
+                    </div>  
                 </div>
             </div>
             <div class="space-x-2 text-sm" v-html="note.content_limited"></div>
@@ -26,7 +31,6 @@
 
 <script lang="ts">
 import Pagination from '@/components/Pagination.vue';
-import { usePage } from '@inertiajs/vue3';
 
 export default {
     components: {
