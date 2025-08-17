@@ -49,7 +49,7 @@ const deleteNote = async () => {
             <div v-if="showNoteList">
                 <NoteList :notes="props.notes" />
             </div>
-            <div class="col-span-2 mt-1 ml-0 mr-1">
+            <div class="col-span-2 mt-1 ml-1 mr-1">
                 <div class="m-2 text-lg font-medium text-gray-900 dark:text-white">
                     <NoteToolbar :showNoteList="showNoteList" @update:showNoteList="showNoteList = $event" />
                     Edit a note
