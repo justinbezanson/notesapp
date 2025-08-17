@@ -2,7 +2,7 @@
     <div class="flex justify-between items-center">
         <div class="flex items-center">
             <a 
-                @click="() => page.props.showNoteList = !page.props.showNoteList" 
+                @click="page.props.showNoteList = !page.props.showNoteList" 
                 :title="page.props.showNoteList ? 'Hide Note List' : 'Show Note List'"
                 class="cursor-pointer text-gray-500 hover:text-gray-700 border-1 border-white hover:border-gray-300 hover:bg-gray-50 rounded-sm mb-1"
             >

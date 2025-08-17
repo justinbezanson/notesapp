@@ -24,14 +24,14 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 type FlashType = {
-    successMessage?: string | null;
+    success?: string | null;
 };
 
 const flash = (usePage().props as { flash?: FlashType }).flash;
 
 onMounted(() => {
-    if (flash && flash.successMessage !== null && flash.successMessage !== undefined) {
-        toast(flash.successMessage, {
+    if (flash && flash.success !== null && flash.success !== undefined) {
+        toast(flash.success, {
             description: 'Your note has been saved successfully.'
         });
     }
