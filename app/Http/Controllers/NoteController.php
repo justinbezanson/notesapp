@@ -25,9 +25,6 @@ class NoteController extends Controller
         return inertia('Notes/Index', [
             'notes' => $notes,
             'showNoteList' => session('showNoteList', true),
-            'flash' => [
-                'successMessage' => $request->session()->get('success'),
-            ],
         ]);
     }
 

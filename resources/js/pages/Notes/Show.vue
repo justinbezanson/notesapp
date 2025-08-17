@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import { ref } from 'vue';
 import NoteList from '@/components/Notes/NoteList.vue';
 import Button from '@/components/ui/button/Button.vue';
 import { useForm } from '@inertiajs/vue3';
+import NoteToolbar from '@/components/Notes/NotesToolbar.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -20,7 +20,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const props = defineProps(['notes', 'note']);
+const props = defineProps(['notes', 'note', 'showNoteList']);
 
 const form = useForm({
     title: props.note.title,
@@ -40,13 +40,14 @@ const deleteNote = async () => {
 
 <template>
     <Head title="Edit Note" />
-    <AppLayout :breadcrumbs="breadcrumbs" title="Create Note">
+    <AppLayout :breadcrumbs="breadcrumbs">
         <div class="grid grid-cols-3">
-            <div>
-            <NoteList :notes="props.notes" />
+            <div v-if="usePage().props.showNoteList">
+                <NoteList :notes="props.notes" />
             </div>
             <div class="col-span-2 mt-1 ml-0 mr-1">
                 <div class="m-2 text-lg font-medium text-gray-900 dark:text-white">
+                    <NoteToolbar />
                     Edit a note
                 </div>
                 <div>
