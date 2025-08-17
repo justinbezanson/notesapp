@@ -8,10 +8,9 @@ import NoteToolbar from '@/components/Notes/NotesToolbar.vue';
 import { toast } from "vue-sonner"
 import { onMounted } from 'vue';
 
-//TODO: toast needs work so it doesn't show on page refresh
 //TODO: showNotelist needs to be sent to server to update sesssion var or switch to local storage
     
-const props = defineProps(['notes', 'successMessage']);
+const props = defineProps(['notes']);
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -24,9 +23,15 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+type FlashType = {
+    successMessage?: string | null;
+};
+
+const flash = (usePage().props as { flash?: FlashType }).flash;
+
 onMounted(() => {
-    if (props?.successMessage !== null) {
-        toast(props.successMessage, {
+    if (flash && flash.successMessage !== null && flash.successMessage !== undefined) {
+        toast(flash.successMessage, {
             description: 'Your note has been saved successfully.'
         });
     }

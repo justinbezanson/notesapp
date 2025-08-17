@@ -22,12 +22,12 @@ class NoteController extends Controller
             ->limitChars('content', 200)
             ->paginate(4);
 
-        $message = $request->query('successMessage');
-
         return inertia('Notes/Index', [
             'notes' => $notes,
             'showNoteList' => session('showNoteList', true),
-            'successMessage' => $message,
+            'flash' => [
+                'successMessage' => $request->session()->get('success'),
+            ],
         ]);
     }
 
@@ -61,9 +61,7 @@ class NoteController extends Controller
             'user_id' => Auth::user()->id,
         ]);
 
-        return to_route('notes.index', [
-            'successMessage' => 'Note created successfully.',
-        ]);
+        return to_route('notes.index')->with('success', 'Note created successfully.');
     }
 
     /**
@@ -104,9 +102,7 @@ class NoteController extends Controller
             'content' => Purify::clean($request->content),
         ]);
 
-        return to_route('notes.index', [
-            'successMessage' => 'Note updated successfully.',
-        ]);
+        return to_route('notes.index')->with('success', 'Note updated successfully.');
     }
 
     /**
@@ -117,8 +113,6 @@ class NoteController extends Controller
         // Ensure the authenticated user is the owner of the note
         $note->delete();
 
-        return to_route('notes.index', [
-            'successMessage' => 'Note deleted successfully.',
-        ]);
+        return to_route('notes.index')->with('success', 'Note deleted successfully.');
     }
 }
