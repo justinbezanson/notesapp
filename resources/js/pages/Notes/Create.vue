@@ -7,8 +7,9 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { ref } from 'vue';
 import NoteList from '@/components/Notes/NoteList.vue';
 import Button from '@/components/ui/button/Button.vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import NoteToolbar from '@/components/Notes/NotesToolbar.vue';
+import { getShowNoteListStatus } from '@/composables/useShowNoteListStatus';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -23,6 +24,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const props = defineProps(['notes']);
 
+let showNoteList = ref(getShowNoteListStatus());
+
 const form = useForm({
     title: '',
     content: '',
@@ -35,13 +38,13 @@ const saveNote = async () => {
 
 <template>
     <Head title="Create Note" />
-    <AppLayout :breadcrumbs="breadcrumbs" title="Create Note">
+    <AppLayout :breadcrumbs="breadcrumbs">
         <div class="grid grid-cols-3">
-            <div v-if="usePage().props.showNoteList">
+            <div v-if="showNoteList">
                 <NoteList :notes="props.notes" />
             </div>
             <div class="col-span-2 mt-1 ml-1 mr-1">
-                <NoteToolbar />
+                <NoteToolbar :showNoteList="showNoteList" @update:showNoteList="showNoteList = $event" />
                 <div class="m-2 text-lg font-medium text-gray-900 dark:text-white">
                     Create a new note
                 </div>

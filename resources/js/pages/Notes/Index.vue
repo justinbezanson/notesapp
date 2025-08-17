@@ -6,9 +6,8 @@ import NoteList from '@/components/Notes/NoteList.vue';
 import Button from '@/components/ui/button/Button.vue';
 import NoteToolbar from '@/components/Notes/NotesToolbar.vue';
 import { toast } from "vue-sonner"
-import { onMounted } from 'vue';
-
-//TODO: showNotelist needs to be sent to server to update sesssion var or switch to local storage
+import { onMounted, ref } from 'vue';
+import { getShowNoteListStatus } from '@/composables/useShowNoteListStatus';
     
 const props = defineProps(['notes']);
 
@@ -22,6 +21,8 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/notes',
     },
 ];
+
+let showNoteList = ref(getShowNoteListStatus());
 
 type FlashType = {
     success?: string | null;
@@ -44,11 +45,11 @@ onMounted(() => {
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="grid grid-cols-3">
-            <div v-if="usePage().props.showNoteList">
+            <div v-if="showNoteList">
                 <NoteList :notes="props.notes" />
             </div>
             <div class="col-span-2 mt-2 ml-2">
-                <NoteToolbar />
+                <NoteToolbar :showNoteList="showNoteList" @update:showNoteList="showNoteList = $event" />
                 <Button @click="$inertia.visit('/notes/create')" class="cursor-pointer">
                     Create Note
                 </Button>
