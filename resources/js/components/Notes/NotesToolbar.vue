@@ -35,10 +35,8 @@ export default {
     methods: {
         toggleShowNoteList() {
             const newValue = !this.showNoteList;
-            console.log('Toggling showNoteList:', newValue);
             this.$emit('update:showNoteList', newValue);
             localStorage.setItem('showNoteList', newValue.toString());
-            console.log(localStorage.getItem('showNoteList'));
         }
     }
 };
