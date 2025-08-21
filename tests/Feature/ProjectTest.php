@@ -6,11 +6,12 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
+
+use Illuminate\Support\Facades\Session;
 
 class ProjectTest extends TestCase
 {
-    use RefreshDatabase, WithoutMiddleware;
+    use RefreshDatabase;
 
     protected $user;
 
@@ -19,7 +20,10 @@ class ProjectTest extends TestCase
         parent::setUp();
         $this->user = User::factory()->create();
         $this->actingAs($this->user);
-        $this->withSession([]);
+        Session::start();
+        $this->withHeaders([
+            'X-CSRF-TOKEN' => csrf_token(),
+        ]);
     }
 
     public function test_projects_page_is_displayed(): void
@@ -112,6 +116,6 @@ class ProjectTest extends TestCase
         $response->assertRedirect(route('login'));
 
         $response = $this->post(route('projects.store'), ['title' => 'Test']);
-        $response->assertStatus(302);
+        $response->assertRedirect(route('login'));
     }
 }
