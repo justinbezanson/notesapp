@@ -1,15 +1,14 @@
 <script setup lang="ts">
+import NoteList from '@/components/Notes/NoteList.vue';
+import NoteToolbar from '@/components/Notes/NotesToolbar.vue';
+import Button from '@/components/ui/button/Button.vue';
+import { getShowNoteListStatus } from '@/composables/useShowNoteListStatus';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import NoteList from '@/components/Notes/NoteList.vue';
-import Button from '@/components/ui/button/Button.vue';
-import { useForm } from '@inertiajs/vue3';
-import NoteToolbar from '@/components/Notes/NotesToolbar.vue';
 import { ref } from 'vue';
-import { getShowNoteListStatus } from '@/composables/useShowNoteListStatus';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -24,7 +23,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const props = defineProps(['notes', 'note']);
 
-let showNoteList = ref(getShowNoteListStatus());
+const showNoteList = ref(getShowNoteListStatus());
 
 const form = useForm({
     title: props.note.title,
@@ -49,7 +48,7 @@ const deleteNote = async () => {
             <div v-if="showNoteList">
                 <NoteList :notes="props.notes" />
             </div>
-            <div class="col-span-2 mt-1 ml-1 mr-1">
+            <div class="col-span-2 mt-1 mr-1 ml-1">
                 <div class="m-2 text-lg font-medium text-gray-900 dark:text-white">
                     <NoteToolbar :showNoteList="showNoteList" @update:showNoteList="showNoteList = $event" />
                     Edit a note
@@ -66,7 +65,7 @@ const deleteNote = async () => {
 
                 <div class="mt-2">
                     <Button @click="saveNote" class="cursor-pointer">Save Note</Button>
-                    <Button @click="deleteNote" variant="destructive" class="cursor-pointer ml-2">Delete Note</Button>
+                    <Button @click="deleteNote" variant="destructive" class="ml-2 cursor-pointer">Delete Note</Button>
                 </div>
             </div>
         </div>

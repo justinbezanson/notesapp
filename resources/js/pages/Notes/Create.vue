@@ -1,15 +1,14 @@
 <script setup lang="ts">
+import NoteList from '@/components/Notes/NoteList.vue';
+import NoteToolbar from '@/components/Notes/NotesToolbar.vue';
+import Button from '@/components/ui/button/Button.vue';
+import { getShowNoteListStatus } from '@/composables/useShowNoteListStatus';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { ref } from 'vue';
-import NoteList from '@/components/Notes/NoteList.vue';
-import Button from '@/components/ui/button/Button.vue';
-import { useForm } from '@inertiajs/vue3';
-import NoteToolbar from '@/components/Notes/NotesToolbar.vue';
-import { getShowNoteListStatus } from '@/composables/useShowNoteListStatus';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -24,7 +23,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const props = defineProps(['notes']);
 
-let showNoteList = ref(getShowNoteListStatus());
+const showNoteList = ref(getShowNoteListStatus());
 
 const form = useForm({
     title: '',
@@ -43,11 +42,9 @@ const saveNote = async () => {
             <div v-if="showNoteList">
                 <NoteList :notes="props.notes" />
             </div>
-            <div class="col-span-2 mt-1 ml-1 mr-1">
+            <div class="col-span-2 mt-1 mr-1 ml-1">
                 <NoteToolbar :showNoteList="showNoteList" @update:showNoteList="showNoteList = $event" />
-                <div class="m-2 text-lg font-medium text-gray-900 dark:text-white">
-                    Create a new note
-                </div>
+                <div class="m-2 text-lg font-medium text-gray-900 dark:text-white">Create a new note</div>
                 <div>
                     <input
                         type="text"

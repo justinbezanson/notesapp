@@ -1,14 +1,16 @@
-<script setup>
-import AppLayout from '@/layouts/AppLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+<script setup lang="ts">
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Head, useForm } from '@inertiajs/vue3';
 
-const props = defineProps({
-    project: Object,
-});
+import type { Project } from '@/types/project';
+
+const props = defineProps<{
+    project: Project;
+}>();
 
 const form = useForm({
     title: props.project.title,
@@ -25,13 +27,11 @@ const submit = () => {
 
     <AppLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Edit {{ project.title }}
-            </h2>
+            <h2 class="text-xl leading-tight font-semibold text-gray-800 dark:text-gray-200">Edit {{ project.title }}</h2>
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <Card>
                     <CardHeader>
                         <CardTitle>Edit project</CardTitle>
@@ -47,9 +47,7 @@ const submit = () => {
                                     <label for="description">Description</label>
                                     <Textarea id="description" v-model="form.description" />
                                 </div>
-                                <Button type="submit" :disabled="form.processing">
-                                    Update Project
-                                </Button>
+                                <Button type="submit" :disabled="form.processing"> Update Project </Button>
                             </div>
                         </form>
                     </CardContent>

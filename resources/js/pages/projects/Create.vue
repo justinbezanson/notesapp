@@ -1,10 +1,10 @@
-<script setup>
-import AppLayout from '@/layouts/AppLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+<script setup lang="ts">
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Head, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
     title: '',
@@ -21,13 +21,11 @@ const submit = () => {
 
     <AppLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Create Project
-            </h2>
+            <h2 class="text-xl leading-tight font-semibold text-gray-800 dark:text-gray-200">Create Project</h2>
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <Card>
                     <CardHeader>
                         <CardTitle>Create a new project</CardTitle>
@@ -43,9 +41,7 @@ const submit = () => {
                                     <label for="description">Description</label>
                                     <Textarea id="description" v-model="form.description" />
                                 </div>
-                                <Button type="submit" :disabled="form.processing">
-                                    Create Project
-                                </Button>
+                                <Button type="submit" :disabled="form.processing"> Create Project </Button>
                             </div>
                         </form>
                     </CardContent>

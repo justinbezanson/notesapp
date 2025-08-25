@@ -1,11 +1,13 @@
-<script setup>
+<script setup lang="ts">
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-defineProps({
-    project: Object,
-});
+import type { Project } from '@/types/project';
+
+defineProps<{
+    project: Project;
+}>();
 </script>
 
 <template>
@@ -13,13 +15,13 @@ defineProps({
 
     <AppLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="text-xl leading-tight font-semibold text-gray-800 dark:text-gray-200">
                 {{ project.title }}
             </h2>
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <Card>
                     <CardHeader>
                         <CardTitle>{{ project.title }}</CardTitle>

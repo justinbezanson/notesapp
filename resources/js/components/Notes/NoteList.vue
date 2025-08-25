@@ -1,9 +1,5 @@
 <template>
-    <div
-        v-for="note in notes.data"
-        :key="note.id"
-        class="m-1 rounded border border-sidebar-border/70 px-2 py-2 dark:border-sidebar-border"
-    >
+    <div v-for="note in notes.data" :key="note.id" class="m-1 rounded border border-sidebar-border/70 px-2 py-2 dark:border-sidebar-border">
         <div class="">
             <div class="space-x-2">
                 <div class="text-sm font-medium text-gray-900 dark:text-white">
@@ -18,7 +14,7 @@
                                 {{ new Date(note.created_at).toLocaleDateString() }}
                             </span>
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </div>
             <div class="space-x-2 text-sm" v-html="note.content_limited"></div>
