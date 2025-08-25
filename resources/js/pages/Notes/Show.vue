@@ -31,7 +31,7 @@ const form = useForm({
 });
 
 const saveNote = async () => {
-    form.post(route('notes.update', { note: props.note.id, title: form.title, content: form.content }));
+    form.put(route('notes.update', { note: props.note.id, title: form.title, content: form.content }));
 };
 
 const deleteNote = async () => {

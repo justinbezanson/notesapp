@@ -9,8 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use Stevebauman\Purify\Facades\Purify;
 use Illuminate\Http\Request;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 class NoteController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -89,6 +92,8 @@ class NoteController extends Controller
      */
     public function update(UpdateNoteRequest $request, Note $note)
     {
+        $this->authorize('update', $note);
+
         //TODO: Add validation rules in UpdateNoteRequest
         $note->update([
             'title' => $request->title,
@@ -104,8 +109,14 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        // Ensure the authenticated user is the owner of the note
-        $note->delete();
+        $this->authorize('delete', $note);
+
+        try {
+            $note->delete();
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Error deleting note: ' . $e->getMessage());
+            return back()->withErrors(['error' => 'Failed to delete note.']);
+        }
 
         return to_route('notes.index')->with('success', 'Note deleted successfully.');
     }
