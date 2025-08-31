@@ -10,9 +10,9 @@
         </div>
 
         <div>
-            <Button @click="$inertia.visit('/notes/create')" class="cursor-pointer w-full">
+            <AppButton @click="$inertia.visit('/notes/create')" class="cursor-pointer w-full">
                 <FilePlus2 /> Add Note
-            </Button>
+            </AppButton>
         </div>
     </div>
     <div v-for="note in notes.data" :key="note.id" class="m-3 border-b border-sidebar-border/70 px-2 py-2 dark:border-sidebar-border">
@@ -43,13 +43,13 @@
 
 <script lang="ts">
 import Pagination from '@/components/Pagination.vue';
-import Button from '@/components/ui/button/Button.vue';
+import AppButton from '@/components/ui/button/Button.vue';
 import { FilePlus2, Search } from 'lucide-vue-next';
 
 export default {
     components: {
         Pagination,
-        Button,
+        AppButton,
         FilePlus2,
         Search
     },
