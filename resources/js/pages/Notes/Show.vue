@@ -44,15 +44,12 @@ const deleteNote = async () => {
 <template>
     <Head title="Edit Note" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="grid grid-cols-3">
-            <div v-if="showNoteList">
+        <div class="grid grid-cols-4 h-full">
+            <div v-if="showNoteList" class="border-r">
                 <NoteList :notes="props.notes" />
             </div>
-            <div class="col-span-2 mt-1 mr-1 ml-1">
-                <div class="m-2 text-lg font-medium text-gray-900 dark:text-white">
-                    <NoteToolbar :showNoteList="showNoteList" @update:showNoteList="showNoteList = $event" />
-                    Edit a note
-                </div>
+            <div class="col-span-3 pt-3 mt-0 mr-3 ml-3 h-full flex flex-col">
+                <NoteToolbar :showNoteList="showNoteList" @update:showNoteList="showNoteList = $event" />
                 <div>
                     <input
                         type="text"
@@ -61,9 +58,11 @@ const deleteNote = async () => {
                         v-model="form.title"
                     />
                 </div>
-                <QuillEditor theme="snow" v-model:content="form.content" contentType="html" />
 
-                <div class="mt-2">
+                <div class="flex-1">
+                    <QuillEditor theme="snow" v-model:content="form.content" contentType="html" />
+                </div>
+                <div class="mt-14 mb-3">
                     <Button @click="saveNote" class="cursor-pointer">Save Note</Button>
                     <Button @click="deleteNote" variant="destructive" class="ml-2 cursor-pointer">Delete Note</Button>
                 </div>

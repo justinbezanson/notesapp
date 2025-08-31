@@ -38,13 +38,12 @@ const saveNote = async () => {
 <template>
     <Head title="Create Note" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="grid grid-cols-3">
-            <div v-if="showNoteList">
+        <div class="grid grid-cols-4 h-full">
+            <div v-if="showNoteList" class="border-r">
                 <NoteList :notes="props.notes" />
             </div>
-            <div class="col-span-2 mt-1 mr-1 ml-1">
+            <div class="col-span-3 pt-3 mt-0 ml-3 mr-3 h-full flex flex-col">
                 <NoteToolbar :showNoteList="showNoteList" @update:showNoteList="showNoteList = $event" />
-                <div class="m-2 text-lg font-medium text-gray-900 dark:text-white">Create a new note</div>
                 <div>
                     <input
                         type="text"
@@ -53,9 +52,12 @@ const saveNote = async () => {
                         v-model="form.title"
                     />
                 </div>
-                <QuillEditor theme="snow" v-model:content="form.content" contentType="html" />
 
-                <div class="mt-2">
+                <div class="flex-1">
+                    <QuillEditor theme="snow" v-model:content="form.content" contentType="html" />
+                </div>
+
+                <div class="mt-14 mb-3">
                     <Button @click="saveNote" class="cursor-pointer">Save Note</Button>
                 </div>
             </div>

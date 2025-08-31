@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import NoteList from '@/components/Notes/NoteList.vue';
 import NoteToolbar from '@/components/Notes/NotesToolbar.vue';
-import Button from '@/components/ui/button/Button.vue';
 import { getShowNoteListStatus } from '@/composables/useShowNoteListStatus';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
@@ -43,13 +42,12 @@ onMounted(() => {
     <Head title="Notes" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="grid grid-cols-3">
-            <div v-if="showNoteList">
+        <div class="grid grid-cols-4 h-full">
+            <div v-if="showNoteList" class="border-r">
                 <NoteList :notes="props.notes" />
             </div>
-            <div class="col-span-2 mt-2 ml-2">
+            <div class="col-span-3 mt-3 ml-3">
                 <NoteToolbar :showNoteList="showNoteList" @update:showNoteList="showNoteList = $event" />
-                <Button @click="$inertia.visit('/notes/create')" class="cursor-pointer"> Create Note </Button>
             </div>
         </div>
     </AppLayout>
