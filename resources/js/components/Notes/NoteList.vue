@@ -50,7 +50,7 @@ import { FilePlus2, Search } from 'lucide-vue-next';
 import { ref, watch } from 'vue';
 import { router } from '@inertiajs/vue3'
 
-const props = defineProps({
+defineProps({
     notes: {
         type: Object as () => {
             data: Array<{
