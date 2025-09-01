@@ -15,9 +15,15 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $projects = request()->user()->projects()->latest()->paginate(10);
+        $projects = $request->user()->projects()
+            ->when($request->input('search'), function ($query, $search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(10);
 
         return Inertia::render('projects/Index', [
             'projects' => $projects,
@@ -27,9 +33,19 @@ class ProjectController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return Inertia::render('projects/Create');
+        $projects = $request->user()->projects()
+            ->when($request->input('search'), function ($query, $search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(10);
+
+        return Inertia::render('projects/Create', [
+            'projects' => $projects,
+        ]);
     }
 
     /**
@@ -46,30 +62,27 @@ class ProjectController extends Controller
 
         $request->user()->projects()->create($validated);
 
-        return redirect()->route('projects.index');
+        return redirect()->route('projects.index')
+            ->with('success', 'Your project has been created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Project $project)
+    public function show(Request $request, Project $project)
     {
         $this->authorize('view', $project);
 
+        $projects = $request->user()->projects()
+            ->when($request->input('search'), function ($query, $search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            })
+            ->latest()->paginate(10);
+
         return Inertia::render('projects/Show', [
             'project' => $project,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Project $project)
-    {
-        $this->authorize('update', $project);
-
-        return Inertia::render('projects/Edit', [
-            'project' => $project,
+            'projects' => $projects,
         ]);
     }
 
@@ -89,7 +102,8 @@ class ProjectController extends Controller
 
         $project->update($validated);
 
-        return redirect()->route('projects.index');
+        return redirect()->route('projects.index')
+            ->with('success', 'Your project has been updated successfully.');
     }
 
     /**
@@ -101,6 +115,7 @@ class ProjectController extends Controller
 
         $project->delete();
 
-        return redirect()->route('projects.index');
+        return redirect()->route('projects.index')
+            ->with('success', 'Your project has been deleted successfully.');
     }
 }

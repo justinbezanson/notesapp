@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import ProjectList from '@/components/projects/ProjectList.vue';
+import ProjectToolbar from '@/components/projects/ProjectToolbar.vue';
+import { getShowProjectListStatus } from '@/composables/useShowProjectListStatus';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
+import { onMounted, ref } from 'vue';
+import { toast } from 'vue-sonner';
 
-defineProps({
-    projects: Object,
-});
+const props = defineProps(['projects']);
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -20,54 +21,33 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const form = useForm({});
+const showProjectList = ref(getShowProjectListStatus());
 
-const deleteProject = (project: any) => {
-    if (confirm('Are you sure you want to delete this project?')) {
-        form.delete(route('projects.destroy', project));
-    }
+type FlashType = {
+    success?: string | null;
 };
+
+const flash = (usePage().props as { flash?: FlashType }).flash;
+
+onMounted(() => {
+    if (flash && flash.success !== null && flash.success !== undefined) {
+        toast(flash.success, {
+            description: 'Your project has been saved successfully.',
+        });
+    }
+});
 </script>
 
 <template>
     <Head title="Projects" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>Your Projects</div>
-                                <div class="text-right">
-                                    <Button @click="$inertia.visit('/projects/create')" class="cursor-pointer"> Create Project </Button>
-                                </div>
-                            </div>
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div v-if="projects && projects.data && projects.data.length > 0" class="grid gap-4">
-                            <div v-for="project in projects.data" :key="project.id" class="flex items-center justify-between rounded-lg border p-4">
-                                <div>
-                                    <h3 class="font-semibold">
-                                        <Link :href="route('projects.show', project)">{{ project.title }}</Link>
-                                    </h3>
-                                    <p class="text-gray-600" v-html="project.description"></p>
-                                </div>
-                                <div class="flex gap-2">
-                                    <Button as-child variant="outline">
-                                        <Link :href="route('projects.edit', project)">Edit</Link>
-                                    </Button>
-                                    <Button @click="deleteProject(project)" variant="destructive"> Delete </Button>
-                                </div>
-                            </div>
-                        </div>
-                        <div v-else>
-                            <p>You don't have any projects yet.</p>
-                        </div>
-                    </CardContent>
-                </Card>
+        <div class="grid grid-cols-4 h-full">
+            <div v-if="showProjectList" class="border-r">
+                <ProjectList :projects="props.projects" />
+            </div>
+            <div class="col-span-3 mt-3 ml-3">
+                <ProjectToolbar :showProjectList="showProjectList" @update:showProjectList="showProjectList = $event" />
             </div>
         </div>
     </AppLayout>
