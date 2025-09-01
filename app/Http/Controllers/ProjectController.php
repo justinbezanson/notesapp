@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ProjectController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $projects = auth()->user()->projects()->latest()->paginate(10);
+        $projects = request()->user()->projects()->latest()->paginate(10);
 
         return Inertia::render('projects/Index', [
             'projects' => $projects,
@@ -49,7 +51,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        Gate::authorize('view', $project);
+        $this->authorize('view', $project);
 
         return Inertia::render('projects/Show', [
             'project' => $project,
@@ -61,7 +63,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        Gate::authorize('update', $project);
+        $this->authorize('update', $project);
 
         return Inertia::render('projects/Edit', [
             'project' => $project,
@@ -73,7 +75,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        Gate::authorize('update', $project);
+        $this->authorize('update', $project);
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -90,7 +92,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        Gate::authorize('delete', $project);
+        $this->authorize('delete', $project);
 
         $project->delete();
 

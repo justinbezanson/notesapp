@@ -2,6 +2,7 @@
     <div class="m-3 mb-0 border-b text-center pb-3">
         <div class="mb-3">
             <input
+                v-model="search"
                 type="text"
                 placeholder="Search notes..."
                 class="mr-1 w-full rounded-md border border-gray-100 p-1 focus:border-indigo-500 focus:ring-indigo-500"
@@ -35,39 +36,51 @@
         </div>
     </div>
 
-    <div class="flex justify-center mt-3 ml-3 mr-3">
-        <Pagination :links="notes.links" :currentpage="notes.current_page" :lastpage="notes.last_page" />
+    <div class="absolute bottom-0">
+        <div class="flex justify-center mt-3 ml-3 mr-3">
+            <Pagination :links="notes.links" :currentpage="notes.current_page" :lastpage="notes.last_page" />
+        </div>
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import Pagination from '@/components/Pagination.vue';
 import AppButton from '@/components/ui/button/Button.vue';
 import { FilePlus2, Search } from 'lucide-vue-next';
+import { ref, watch } from 'vue';
+import { router } from '@inertiajs/vue3'
 
-export default {
-    components: {
-        Pagination,
-        AppButton,
-        FilePlus2,
-        Search
-    },
-    props: {
-        notes: {
-            type: Object as () => {
-                data: Array<{
-                    id: number;
-                    title: string;
-                    content: string;
-                    created_at: string;
-                    content_limited: string;
-                }>;
-                links: Array<{ url: string | null; label: string; active?: boolean }>;
-                current_page: number;
-                last_page: number;
-            },
-            required: true,
+const props = defineProps({
+    notes: {
+        type: Object as () => {
+            data: Array<{
+                id: number;
+                title: string;
+                content: string;
+                created_at: string;
+                content_limited: string;
+            }>;
+            links: Array<{ url: string | null; label: string; active?: boolean }>;
+            current_page: number;
+            last_page: number;
         },
+        required: true,
     },
-};
+});
+
+const search = ref('');
+let searchTimeout: ReturnType<typeof setTimeout> | null = null;
+
+watch(search, (newValue) => {
+    if (searchTimeout) {
+        clearTimeout(searchTimeout);
+    }
+    searchTimeout = setTimeout(() => {
+        router.get(window.location.href, { search: newValue }, {
+            preserveState: true,
+            replace: true
+        });
+    }, 1000);
+});
 </script>
+

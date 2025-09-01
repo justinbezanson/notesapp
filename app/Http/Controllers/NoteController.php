@@ -21,6 +21,10 @@ class NoteController extends Controller
     {
         $notes = Note::query()
             ->where('user_id', Auth::user()->id)
+            ->when($request->input('search'), function ($query, $search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('content', 'like', "%{$search}%");
+            })
             ->latest()
             ->paginate(10);
 
@@ -32,10 +36,14 @@ class NoteController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         $notes = Note::query()
             ->where('user_id', Auth::user()->id)
+            ->when($request->input('search'), function ($query, $search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('content', 'like', "%{$search}%");
+            })
             ->latest()
             ->paginate(10);
 
@@ -63,10 +71,14 @@ class NoteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Note $note)
+    public function show(Request $request, Note $note)
     {
         $notes = Note::query()
             ->where('user_id', Auth::user()->id)
+            ->when($request->input('search'), function ($query, $search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('content', 'like', "%{$search}%");
+            })
             ->latest()
             ->paginate(10);
 
@@ -117,4 +129,6 @@ class NoteController extends Controller
 
         return to_route('notes.index')->with('success', 'Note deleted successfully.');
     }
+
+    
 }
