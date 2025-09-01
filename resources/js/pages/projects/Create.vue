@@ -12,7 +12,7 @@ import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { ref } from 'vue';
 
-const props = defineProps<{
+defineProps<{
     projects: any;
 }>();
 
