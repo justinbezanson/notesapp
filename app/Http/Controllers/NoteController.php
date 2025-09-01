@@ -22,8 +22,7 @@ class NoteController extends Controller
         $notes = Note::query()
             ->where('user_id', Auth::user()->id)
             ->latest()
-            ->limitChars('content', 200)
-            ->paginate(4);
+            ->paginate(10);
 
         return inertia('Notes/Index', [
             'notes' => $notes,
@@ -38,8 +37,7 @@ class NoteController extends Controller
         $notes = Note::query()
             ->where('user_id', Auth::user()->id)
             ->latest()
-            ->limitChars('content', 200)
-            ->paginate(4);
+            ->paginate(10);
 
         return inertia('Notes/Create', [
             'notes' => $notes,
@@ -70,8 +68,7 @@ class NoteController extends Controller
         $notes = Note::query()
             ->where('user_id', Auth::user()->id)
             ->latest()
-            ->limitChars('content', 200)
-            ->paginate(4);
+            ->paginate(10);
 
         return inertia('Notes/Show', [
             'notes' => $notes,

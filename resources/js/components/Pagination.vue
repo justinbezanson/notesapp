@@ -6,13 +6,13 @@
                     v-if="link.url === null"
                     :key="key"
                     class="mr-1 mb-1 rounded border px-4 py-3 text-sm leading-4 text-gray-400"
-                    v-html="link.label"
+                    v-html="getLinkLabel(link.label)"
                 ></div>
                 <InertiaLink
                     v-else
                     :key="`link-${key}`"
                     preserve-scroll
-                    class="mr-1 mb-1 rounded border px-4 py-3 text-sm leading-4 hover:bg-gray-100 focus:border-indigo-500 focus:text-indigo-500"
+                    class="mr-1 mb-1 rounded border px-4 py-3 text-xs leading-4 hover:bg-gray-100 focus:border-indigo-500 focus:text-indigo-500"
                     :class="{
                         'bg-white': link.active,
                         'font-bold': currentpage?.toString() == link.label,
@@ -20,7 +20,7 @@
                     }"
                     :href="link.url"
                 >
-                    <span v-html="link.label"></span>
+                    <span v-html="getLinkLabel(link.label)"></span>
                 </InertiaLink>
             </template>
         </div>
@@ -49,5 +49,12 @@ export default {
         currentpage: Number,
         lastpage: Number,
     },
+    methods: {
+        getLinkLabel(label: string) {
+            return label
+                .replace(' Previous', '')
+                .replace('Next ', '');
+        }
+    }
 };
 </script>
