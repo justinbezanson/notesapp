@@ -6,6 +6,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Stevebauman\Purify\Facades\Purify;
 
 class ProjectController extends Controller
 {
@@ -40,6 +41,8 @@ class ProjectController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
+
+        $validated['description'] = Purify::clean($validated['description']);
 
         $request->user()->projects()->create($validated);
 
@@ -81,6 +84,8 @@ class ProjectController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
+
+        $validated['description'] = Purify::clean($validated['description']);
 
         $project->update($validated);
 

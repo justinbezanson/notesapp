@@ -53,7 +53,7 @@ const deleteProject = (project: any) => {
                                     <h3 class="font-semibold">
                                         <Link :href="route('projects.show', project)">{{ project.title }}</Link>
                                     </h3>
-                                    <p class="text-gray-600">{{ project.description }}</p>
+                                    <p class="text-gray-600" v-html="project.description"></p>
                                 </div>
                                 <div class="flex gap-2">
                                     <Button as-child variant="outline">

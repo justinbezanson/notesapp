@@ -27,7 +27,7 @@ defineProps<{
                         <CardTitle>{{ project.title }}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p>{{ project.description }}</p>
+                        <p v-html="project.description"></p>
                     </CardContent>
                 </Card>
             </div>

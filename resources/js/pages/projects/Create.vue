@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import { QuillEditor } from '@vueup/vue-quill';
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 const form = useForm({
     title: '',
@@ -36,12 +38,15 @@ const submit = () => {
                                 <div>
                                     <label for="title">Title</label>
                                     <Input id="title" v-model="form.title" />
+                                    <InputError :message="form.errors.title" />
                                 </div>
                                 <div>
                                     <label for="description">Description</label>
-                                    <Textarea id="description" v-model="form.description" />
+                                    <QuillEditor theme="snow" v-model:content="form.description" contentType="html" />
+                                    <InputError :message="form.errors.description" />
+                                    <Button type="submit" :disabled="form.processing"> Create Project </Button>
                                 </div>
-                                <Button type="submit" :disabled="form.processing"> Create Project </Button>
+                                
                             </div>
                         </form>
                     </CardContent>
