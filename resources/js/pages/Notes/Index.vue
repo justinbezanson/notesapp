@@ -42,11 +42,11 @@ onMounted(() => {
     <Head title="Notes" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="grid grid-cols-4 h-full">
-            <div v-if="showNoteList" class="border-r">
+        <div class="grid grid-cols-1 lg:grid-cols-4 h-full">
+            <div v-if="showNoteList" class="lg:col-span-1 col-span-full border-r">
                 <NoteList :notes="props.notes" />
             </div>
-            <div class="col-span-3 mt-3 ml-3">
+            <div class="lg:col-span-3 hidden lg:block mt-3 ml-3">
                 <NoteToolbar :showNoteList="showNoteList" @update:showNoteList="showNoteList = $event" />
             </div>
         </div>

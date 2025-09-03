@@ -38,11 +38,11 @@ const saveNote = async () => {
 <template>
     <Head title="Create Note" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="grid grid-cols-4 h-full">
-            <div v-if="showNoteList" class="border-r">
+        <div class="grid grid-cols-1 lg:grid-cols-4 h-full">
+            <div v-if="showNoteList" class="lg:col-span-1 hidden lg:block border-r">
                 <NoteList :notes="props.notes" />
             </div>
-            <div class="col-span-3 pt-3 mt-0 ml-3 mr-3 h-full flex flex-col">
+            <div class="lg:col-span-3 col-span-full pt-3 mt-0 ml-3 mr-3 h-full flex flex-col">
                 <NoteToolbar :showNoteList="showNoteList" @update:showNoteList="showNoteList = $event" />
                 <div>
                     <input
