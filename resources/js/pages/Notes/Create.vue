@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import NoteList from '@/components/Notes/NoteList.vue';
 import NoteToolbar from '@/components/Notes/NotesToolbar.vue';
-import Button from '@/components/ui/button/Button.vue';
 import { getShowNoteListStatus } from '@/composables/useShowNoteListStatus';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
@@ -42,8 +41,13 @@ const saveNote = async () => {
             <div v-if="showNoteList" class="lg:col-span-1 hidden lg:block border-r">
                 <NoteList :notes="props.notes" />
             </div>
-            <div class="lg:col-span-3 col-span-full pt-3 mt-0 ml-3 mr-3 h-full flex flex-col">
-                <NoteToolbar :showNoteList="showNoteList" @update:showNoteList="showNoteList = $event" />
+            <div class="lg:col-span-3 col-span-full pt-3 mt-0 mr-3 ml-3 pb-8 h-full flex flex-col">
+                <NoteToolbar
+                    :showNoteList="showNoteList"
+                    @update:showNoteList="showNoteList = $event"
+                    :show-save="true"
+                    @save="saveNote"
+                />
                 <div>
                     <input
                         type="text"
@@ -57,9 +61,7 @@ const saveNote = async () => {
                     <QuillEditor theme="snow" v-model:content="form.content" contentType="html" />
                 </div>
 
-                <div class="mt-14 mb-3">
-                    <Button @click="saveNote" class="cursor-pointer">Save Note</Button>
-                </div>
+                <div>&nbsp;</div>
             </div>
         </div>
     </AppLayout>
