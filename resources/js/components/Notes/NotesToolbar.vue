@@ -4,7 +4,7 @@
             <a
                 @click="toggleShowNoteList"
                 :title="showNoteList ? 'Hide Note List' : 'Show Note List'"
-                class="mb-1 cursor-pointer rounded-sm border-1 border-white text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                class="mb-1 cursor-pointer rounded-sm border-1 border-white text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 hidden lg:block"
             >
                 <ChevronsLeft v-if="showNoteList" title="Hide Note List" />
                 <ChevronsRight v-else title="Show Note List" />
