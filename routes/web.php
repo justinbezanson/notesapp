@@ -20,6 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
     Route::put('/notes/{note}', [NoteController::class, 'update'])->name('notes.update');
     Route::delete('/notes/{note}', [NoteController::class, 'destroy'])->name('notes.destroy');
+    Route::post('/notes/{note}/clone', [NoteController::class, 'clone'])->name('notes.clone');
 
     Route::get('/notes/{note}', [NoteController::class, 'show'])->name('notes.show');
 });

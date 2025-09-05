@@ -123,12 +123,24 @@ class NoteController extends Controller
         try {
             $note->delete();
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Error deleting note: ' . $e->getMessage());
+            \Illuminate-›Support\Facades\Log::error('Error deleting note: ' . $e->getMessage());
             return back()->withErrors(['error' => 'Failed to delete note.']);
         }
 
         return to_route('notes.index')->with('success', 'Note deleted successfully.');
     }
 
-    
+    public function clone(Note $note)
+    {
+        $this->authorize('create', Note::class);
+
+        $newNote = $note->replicate();
+        $newNote->title = $note->title . ' (Copy)';
+        $newNote->slug = str($newNote->title)->slug();
+        $newNote->created_at = now();
+        $newNote->updated_at = now();
+        $newNote->save();
+
+        return to_route('notes.show', $newNote)->with('success', 'Note cloned successfully.');
+    }
 }

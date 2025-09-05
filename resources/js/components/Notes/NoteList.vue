@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <div v-for="note in notes.data" :key="note.id" class="ml-3 mr-3 border-b border-sidebar-border/70 px-2 py-2 dark:border-sidebar-border">
+    <div v-for="note in notes.data" :key="note.id" class="group ml-3 mr-3 border-b border-sidebar-border/70 px-2 py-2 dark:border-sidebar-border">
         <div class="space-x-2">
             <div class="text-sm font-medium text-gray-900 dark:text-white">
                 <div class="lg:flex lg:items-center lg:space-x-2">
@@ -30,6 +30,20 @@
                         <span class="text-xs text-gray-500 dark:text-gray-400">
                             {{ new Date(note.created_at).toLocaleDateString() }}
                         </span>
+                    </div>
+                    <div class="flex items-center opacity-0 group-hover:opacity-100">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger as-child>
+                                <AppButton variant="ghost" class="h-8 w-8 p-0">
+                                    <span class="sr-only">Open menu</span>
+                                    <Ellipsis class="h-4 w-4" />
+                                </AppButton>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem @click="cloneNote(note.id)">Clone</DropdownMenuItem>
+                                <DropdownMenuItem @click="editNote(note.id)">Edit</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </div>
             </div>
@@ -46,7 +60,13 @@
 <script setup lang="ts">
 import Pagination from '@/components/Pagination.vue';
 import AppButton from '@/components/ui/button/Button.vue';
-import { FilePlus2, Search } from 'lucide-vue-next';
+import { FilePlus2, Search, Ellipsis } from 'lucide-vue-next';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { ref, watch } from 'vue';
 import { router } from '@inertiajs/vue3'
 
@@ -82,5 +102,13 @@ watch(search, (newValue) => {
         });
     }, 1000);
 });
+
+const cloneNote = (id: number) => {
+    router.post(`/notes/${id}/clone`);
+};
+
+const editNote = (id: number) => {
+    router.get(`/notes/${id}`);
+};
 </script>
 

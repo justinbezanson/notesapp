@@ -3,11 +3,12 @@ import NoteList from '@/components/Notes/NoteList.vue';
 import NoteToolbar from '@/components/Notes/NotesToolbar.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import InputError from '@/components/InputError.vue';
+import { toast } from 'vue-sonner';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -21,6 +22,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const props = defineProps(['notes', 'note']);
+const page = usePage();
 
 const showNoteList = ref(true);
 
@@ -28,6 +30,24 @@ const form = useForm({
     title: props.note.title,
     content: props.note.content,
 });
+
+watch(
+    () => props.note,
+    (newNote) => {
+        form.title = newNote.title;
+        form.content = newNote.content;
+    },
+);
+
+watch(
+    () => page.props.flash.success,
+    (successMessage) => {
+        if (successMessage) {
+            toast.success(successMessage as string);
+        }
+    },
+    { immediate: true },
+);
 
 const saveNote = async () => {
     form.put(route('notes.update', { note: props.note.id, title: form.title, content: form.content }));
