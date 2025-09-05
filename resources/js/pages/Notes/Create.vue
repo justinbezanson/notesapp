@@ -56,12 +56,12 @@ const saveNote = async () => {
                         placeholder="Note Title"
                         v-model="form.title"
                     />
-                    <InputError :message="form.errors.title" class="mt-2" />
+                    <InputError :message="form.errors.title" class="mt-0 mb-2" />
                 </div>
 
                 <div class="flex-1">
                     <QuillEditor theme="snow" v-model:content="form.content" contentType="html" />
-                    <InputError :message="form.errors.content" class="mt-2" />
+                    <InputError :message="form.errors.content" class="mt-2 mb-2" />
                 </div>
 
                 <div>&nbsp;</div>
