@@ -8,6 +8,7 @@ import { Head, useForm } from '@inertiajs/vue3';
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { ref } from 'vue';
+import InputError from '@/components/InputError.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -55,10 +56,12 @@ const saveNote = async () => {
                         placeholder="Note Title"
                         v-model="form.title"
                     />
+                    <InputError :message="form.errors.title" class="mt-2" />
                 </div>
 
                 <div class="flex-1">
                     <QuillEditor theme="snow" v-model:content="form.content" contentType="html" />
+                    <InputError :message="form.errors.content" class="mt-2" />
                 </div>
 
                 <div>&nbsp;</div>
