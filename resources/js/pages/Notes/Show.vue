@@ -33,9 +33,7 @@ const saveNote = async () => {
 };
 
 const deleteNote = async () => {
-    if (confirm('Are you sure you want to delete this note? This action cannot be undone.')) {
-        form.delete(route('notes.destroy', { note: props.note.id }));
-    }
+    form.delete(route('notes.destroy', { note: props.note.id }));
 };
 </script>
 
@@ -53,7 +51,7 @@ const deleteNote = async () => {
                     :show-save="true"
                     @save="saveNote"
                     :show-delete="true"
-                    @delete="deleteNote"
+                    :on-delete="deleteNote"
                 />
                 <div>
                     <input
