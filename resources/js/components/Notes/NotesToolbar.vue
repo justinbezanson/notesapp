@@ -11,7 +11,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
+import { Button as ShadcnButton } from '@/components/ui/button';
 
 export default {
     props: {
@@ -48,7 +48,7 @@ export default {
         AlertDialogHeader,
         AlertDialogTitle,
         AlertDialogTrigger,
-        Button,
+        ShadcnButton,
     },
     emits: ['update:showNoteList', 'save'],
     methods: {
@@ -64,28 +64,28 @@ export default {
 <template>
     <div class="flex items-center">
         <div class="flex items-center">
-            <Button variant="link" size="icon"
+            <ShadcnButton variant="link" size="icon"
                 @click="toggleShowNoteList"
                 :title="showNoteList ? 'Hide Note List' : 'Show Note List'"
                 class="mb-1 cursor-pointer rounded-sm border-1 border-white p-2 text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 hidden lg:block"
             >
                 <ChevronsLeft v-if="showNoteList" title="Hide Note List" class="h-4 w-4" />
                 <ChevronsRight v-else title="Show Note List" class="h-4 w-4" />
-            </Button>
-            <Button variant="link" size="icon"
+            </ShadcnButton>
+            <ShadcnButton variant="link" size="icon"
                 v-if="showSave"
                 @click="$emit('save')"
                 title="Save Note"
                 class="mb-1 cursor-pointer rounded-sm border-1 border-white p-2 text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
             >
                 <Save class="h-4 w-4" />
-            </Button>
+            </ShadcnButton>
             <div v-if="showDelete">
                 <AlertDialog>
                     <AlertDialogTrigger as-child>
-                        <Button variant="link" size="icon" class="mb-1 cursor-pointer rounded-sm border-1 border-white p-2 text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700">
+                        <ShadcnButton variant="link" size="icon" class="mb-1 cursor-pointer rounded-sm border-1 border-white p-2 text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700">
                             <Trash2 class="h-3 w-3" />
-                        </Button>
+                        </ShadcnButton>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                         <AlertDialogHeader>

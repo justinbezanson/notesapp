@@ -3,7 +3,7 @@ import InputError from '@/components/InputError.vue';
 import ProjectList from '@/components/projects/ProjectList.vue';
 import ProjectToolbar from '@/components/projects/ProjectToolbar.vue';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+
 import { getShowProjectListStatus } from '@/composables/useShowProjectListStatus';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
