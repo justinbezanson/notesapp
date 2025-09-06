@@ -22,9 +22,9 @@
             <div class="text-sm font-medium text-gray-900 dark:text-white">
                 <div class="lg:flex lg:items-center lg:space-x-2">
                     <div class="lg:w-3/4">
-                        <a :href="`/notes/${note.id}`" class="hover:text-indigo-600 hover:underline">
+                        <Link :href="`/notes/${note.id}`" class="hover:text-indigo-600 hover:underline">
                             <strong>{{ note.title }}</strong>
-                        </a>
+                        </Link>
                     </div>
                     <div class="lg:w-1/4 lg:text-right lg:align-top">
                         <span class="text-xs text-gray-500 dark:text-gray-400">
@@ -68,7 +68,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ref, watch } from 'vue';
-import { router } from '@inertiajs/vue3'
+import { router, Link } from '@inertiajs/vue3'
 
 defineProps({
     notes: {
